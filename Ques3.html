@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Schema</title>
+    <script>
+        function Schema (schema){
+            this.schema=schema;
+            this.sortedKeys = Object.keys(schema).sort();
+        };
+        Schema.prototype.test=function(o){
+            var okeys = Object.keys(o).sort();
+           // console.log(this.sortedKeys.length);
+            //console.log(this.schema);
+            //console.log(okeys.length);
+           // console.log(o);
+            if (okeys.length != this.sortedKeys.length){
+                //console.log('length not equal: '+ (okeys.length!= this.sortedKeys.length));
+                return false;
+            }
+            for (var prop in o){
+
+                if (typeof( o[prop] )!== typeof (this.schema[prop])){
+                   // console.log('type not equal'+'o.prop: ' + typeof( o[prop] ) + 'this.schema[prop]'+ typeof (this.schema[prop]));
+                    return false;
+                }
+            }
+
+
+
+
+
+            return true;
+        };
+        var schema = new Schema({name:'Adi', id:'4', date:'Mar 27'});
+        var schema2 = new Schema({
+            name: 'string',
+            id: 'number',
+            date: 'object'
+        });
+        var x = {name:'Adi'};
+        var y ={name:'Adi', id:'adadsas' , date:{}};
+        var z = {name:'Adi', id:'4', date:'Adi'};
+        var w = {name:'Adi', date:'4', id:'Adi'};
+
+        console.log(schema.test(x));
+        console.log(schema.test(w));
+        console.log(schema.test(z));
+        console.log(schema2.test(w));
+        console.log(schema2.test(x));
+        console.log(schema2.test(y));
+        console.log(schema2.test(z));
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

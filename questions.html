@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Jasmine Test 3/27</title>
+    <script src="bower_components/jasmine/lib/jasmine-core/jasmine.js"></script>
+    <script>
+        // test cases
+        function Test() {}
+        Test.assert = function (inp, act, exp) {
+            if (exp !== act) {
+                console.log('Did not pass test for input: ' +inp+' - Expected ' + exp + ' got ' + act);
+            }
+        };
+        // function to check for primes
+        function isPrime(num){
+            var i, count = 0, len=Math.sqrt(num);
+            for (i = 2; i<=len; i++){
+                if(num %i ==0){
+                    count++;
+                    return false;
+
+                }
+
+
+            }
+            if (count==0){
+                return true;
+            }
+        }
+        // test cases
+        Test.assert(2, isPrime(2), true);
+        Test.assert(4, isPrime(4), false);
+        Test.assert(11, isPrime(11), true);
+        Test.assert(12, isPrime(12), false);
+        // function to get factorials
+        function factorial(n){
+            if (n>0) {
+                return n * factorial(n - 1);
+            }else if (n==0){
+                return 1;
+            }
+            else{
+                throw 'Invalid input';
+            }
+        }
+        // test cases
+        Test.assert(2, factorial(2), 2);
+        try {
+            Test.assert(-2, factorial(-2), '"should throw an error - Invalid input"');
+        } catch (ex) {
+            Test.assert(-2, ex, 'Invalid input');
+        }
+        Test.assert(5,factorial(5), 120);
+
+        // function schematester
+        function Schema(schema) {
+            this.schema = schema;
+            this.sortedKeys = Object.keys(schema).sort();
+        }
+        Schema.prototype.test=function(o){
+            var okeys = Object.keys(o).sort();
+            //check if length is same
+            if (okeys.length != this.sortedKeys.length){
+                //console.log('length not equal: '+ (okeys.length!= this.sortedKeys.length));
+                return false;
+            }
+            //check if all types are same
+            for (var prop in o){
+
+                if (typeof( o[prop] )!== typeof (this.schema[prop])){
+                    return false;
+                }
+            }
+
+
+
+
+
+            return true;
+        };
+        var schema = new Schema({
+            name: 'string',
+            id: 'number',
+            date: 'object'
+        });
+        Test.assert({
+            name: 'Raymond'
+        },schema.test({
+            name: 'Raymond'
+        }), false);
+        console.log('Done with the tests.');
+    </script>
+</head>
+<body>
+
+</body>
+</html>

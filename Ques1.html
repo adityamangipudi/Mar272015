@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>N Primes</title>
+    <script>
+        function Test() {}
+        Test.assert = function (act, exp) {
+            if (exp !== act) {
+                console.log('Did not pass test - Expected ' + exp + ' got ' + act);
+            }
+        };
+        function isPrime(num){
+            var i, count = 0, len=Math.sqrt(num);
+            for (i = 2; i<=len; i++){
+                if(num %i ==0){
+                    count++;
+                    return false;
+
+                }
+
+
+            }
+            if (count==0){
+                return true;
+            }
+        }
+        function primes (n){
+            var arr = [];
+            for (var i =2; arr.length<n; i++){
+                if(isPrime(i)){
+                    arr.push(i);
+                }
+            }
+            return arr;
+        };
+        var ret = primes(15);
+        console.log(ret);
+        console.log(ret.length);
+        Test.assert(isPrime(2), true);
+        Test.assert(isPrime(4), false);
+        Test.assert(isPrime(11), true);
+        Test.assert(isPrime(12), false);
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>
